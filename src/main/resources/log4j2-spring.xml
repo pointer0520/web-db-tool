@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30" isThreadContextMapInheritable="true">
+
+    <!-- ========================= -->
+    <!-- 1. 全局属性 -->
+    <!-- ========================= -->
+    <Properties>
+        <Property name="LOG_HOME">logs</Property>
+        <Property name="FILE_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%X{traceID}] %logger{36} - %msg%n</Property>
+        <Property name="MAX_SIZE">50MB</Property>
+        <Property name="MAX_HISTORY">30</Property>
+    </Properties>
+
+    <!-- ========================= -->
+    <!-- 2. Appenders（输出器） -->
+    <!-- ========================= -->
+    <Appenders>
+
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+        </Console>
+
+        <!-- 通用滚动日志 -->
+        <RollingFile name="AppFile"
+                     fileName="${LOG_HOME}/app.log"
+                     filePattern="${LOG_HOME}/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${MAX_SIZE}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${MAX_HISTORY}"/>
+        </RollingFile>
+
+        <!-- 错误日志 -->
+        <RollingFile name="ErrorFile"
+                     fileName="${LOG_HOME}/error.log"
+                     filePattern="${LOG_HOME}/error-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${MAX_SIZE}"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingFile>
+
+        <!-- SQL 日志 -->
+        <RollingFile name="SqlFile"
+                     fileName="${LOG_HOME}/sql.log"
+                     filePattern="${LOG_HOME}/sql-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${MAX_SIZE}"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- Web 访问日志 -->
+        <RollingFile name="WebFile"
+                     fileName="${LOG_HOME}/web.log"
+                     filePattern="${LOG_HOME}/web-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${MAX_SIZE}"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- 业务日志 -->
+        <RollingFile name="BizFile"
+                     fileName="${LOG_HOME}/biz.log"
+                     filePattern="${LOG_HOME}/biz-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="${MAX_SIZE}"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- 异步包装（性能提升） -->
+        <Async name="AsyncAppender">
+            <AppenderRef ref="AppFile"/>
+            <AppenderRef ref="ErrorFile"/>
+<!--            <AppenderRef ref="SqlFile"/>-->
+            <AppenderRef ref="WebFile"/>
+            <AppenderRef ref="BizFile"/>
+        </Async>
+
+    </Appenders>
+
+    <!-- ========================= -->
+    <!-- 3. Loggers（日志分类） -->
+    <!-- ========================= -->
+    <Loggers>
+
+        <!-- SQL 日志（Spring JDBC / MyBatis） -->
+        <Logger name="org.springframework.jdbc.core" level="DEBUG" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+        </Logger>
+        <Logger name="org.mybatis" level="DEBUG" additivity="false">
+            <AppenderRef ref="SqlFile"/>
+        </Logger>
+
+        <!-- Web 请求日志 -->
+        <Logger name="org.springframework.web" level="INFO" additivity="false">
+            <AppenderRef ref="WebFile"/>
+        </Logger>
+
+        <!-- 业务日志（包名） -->
+        <Logger name="com.dashu.dbtool" level="INFO" additivity="false">
+            <AppenderRef ref="BizFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- 错误日志 -->
+        <Logger name="org.springframework" level="WARN" additivity="false">
+            <AppenderRef ref="ErrorFile"/>
+        </Logger>
+
+        <!-- Root 根日志 -->
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="AsyncAppender"/>
+        </Root>
+
+    </Loggers>
+
+</Configuration>

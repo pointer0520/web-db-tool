@@ -85,6 +85,11 @@ public enum ResponseCode {
     VERIFICATION_CODE_EXPIRED(1006, "验证码已过期"),
 
     /**
+     * 参数校验失败
+     */
+    VERIFICATION_PARAM_ERROR(1007, "参数校验未通过"),
+
+    /**
      * 文件上传失败
      */
     FILE_UPLOAD_FAILED(2001, "文件上传失败"),
