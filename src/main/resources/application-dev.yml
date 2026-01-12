@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: bear123456
+    url: jdbc:postgresql://49.234.41.129:11432/web-db-tool
