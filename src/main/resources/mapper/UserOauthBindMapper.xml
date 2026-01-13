@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dashu.dbtool.mapper.UserOauthBindMapper">
+    <resultMap id="UserOauthBindMap" type="com.dashu.dbtool.model.entity.UserOauthBind">
+        <id property="id" column="id"/>
+        <result property="provider" column="provider"/>
+        <result property="providerUid" column="provider_uid"/>
+        <result property="userId" column="user_id"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="refreshToken" column="refresh_token"/>
+        <result property="expiresAt" column="expires_at"/>
+        <result property="linkedAt" column="linked_at"/>
+    </resultMap>
+
+    <sql id="BaseColumns">
+        id, user_id, provider, provider_uid, access_token, refresh_token, expires_at, linked_at
+    </sql>
+
+</mapper>

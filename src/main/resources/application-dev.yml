@@ -1,6 +1,19 @@
 spring:
+  # 应用主数据源：存储用户信息、会话管理等
   datasource:
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: bear123456
     url: jdbc:postgresql://49.234.41.129:11432/web-db-tool
+  # 用户动态连接池由 DataSourceManager 管理，与此配置无关
+
+  data:
+    redis:
+      host: 49.234.41.129
+      port: 15379
+      password: bear123456
+
+  session:
+    redis:
+      namespace: spring:session
+      flush-mode: on_save
