@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>3.4.12</version>
     </parent>
 
     <properties>
@@ -66,6 +66,13 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!-- Bcrypt -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
         <!-- WebSocket (用于做类似控制台的实时日志输出) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -84,7 +91,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4</version>
         </dependency>
         <!-- ========================================== -->
         <!-- 3. 多数据库驱动 (支持 MySQL, PG, Oracle, SQLServer) -->
@@ -162,6 +169,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <build>

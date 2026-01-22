@@ -17,3 +17,4 @@ spring:
     redis:
       namespace: spring:session
       flush-mode: on_save
+      save-mode: on_set_attribute

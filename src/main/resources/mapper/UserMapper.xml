@@ -17,4 +17,13 @@
     <sql id="BaseColumns">
         id, username, password, avatar_url, email, created_at, last_login_at
     </sql>
+    <insert id="insert">
+        INSERT INTO user (username, password, avatar_url, email)
+        VALUES (#{username}, #{password}, #{avatarUrl}, #{email})
+    </insert>
+    <select id="findByUsername" resultType="com.dashu.dbtool.model.entity.User">
+        SELECT <include refid="BaseColumns"/>
+        FROM user
+        WHERE username = #{username}
+    </select>
 </mapper>

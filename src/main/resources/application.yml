@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 # 默认激活 dev profile（适用于 JAR 直接运行）
 # Maven 运行时通过 pom.xml 插件配置激活
@@ -10,3 +10,9 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.dashu.dbtool.model.entity
+#
+#debug: true
+#logging:
+#  level:
+#    root: debug
+#    org.springframework: debug
